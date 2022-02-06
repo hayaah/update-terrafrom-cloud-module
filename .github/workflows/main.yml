@@ -1,0 +1,20 @@
+on: [push]
+
+jobs:
+  hello_world_job:
+    runs-on: ubuntu-latest
+    name: A job to test function 66
+    steps:
+      - name: tets create module
+        id: hello
+        uses: hayaah/update-terrafrom-cloud-module@v1.1.1
+        with:
+          module_name: 'module-Name-100'
+          token:  ${{ secrets.TERRAFORM_TOKEN }}
+          provider: 'aws'
+          registry_name: 'private'
+          organization: 'wix-infragod',
+          version: 2.0.0
+      # Use the output from the `hello` step
+      - name: Get the output time
+        run: echo "The time was ${{ steps.hello.outputs.response }}"
