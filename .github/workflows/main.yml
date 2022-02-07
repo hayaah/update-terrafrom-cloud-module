@@ -7,14 +7,15 @@ jobs:
     steps:
       - name: tets create module
         id: hello
-        uses: hayaah/update-terrafrom-cloud-module@v1.1.6
+        uses: hayaah/update-terrafrom-cloud-module@v1.1.7
         with:
           module_name: 'module-Name-100'
           token:  ${{ secrets.TERRAFORM_TOKEN }}
           provider: 'aws'
           registry_name: 'private'
           organization: 'wix-infragod'
-          version: 2.2.6
+          version: 3.0.0
+          file_path: '../Archive.zip'
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.response }}"
