@@ -13,7 +13,7 @@ jobs:
           token:  ${{ secrets.TERRAFORM_TOKEN }}
           provider: 'aws'
           registry_name: 'private'
-          organization: 'wix-infragod',
+          organization: 'wix-infragod'
           version: 2.0.0
       # Use the output from the `hello` step
       - name: Get the output time
