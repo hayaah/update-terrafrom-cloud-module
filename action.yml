@@ -17,7 +17,9 @@ inputs:
     description: 'the terrafrom cloud organization to have the module created in | your team organization'
     required: true 
   version:
-     required: true 
+    required: true 
+  file_path:
+    required: true 
 outputs:
   response: 
     description: 'request returned response'
