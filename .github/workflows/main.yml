@@ -7,7 +7,7 @@ jobs:
     steps:
       - name: tets create module
         id: hello
-        uses: hayaah/update-terrafrom-cloud-module@v1.1.3
+        uses: hayaah/update-terrafrom-cloud-module@v1.1.4
         with:
           module_name: 'module-Name-100'
           token:  ${{ secrets.TERRAFORM_TOKEN }}
