@@ -6006,8 +6006,7 @@ const createModule = __nccwpck_require__(4466)
 async function run() {
   try {
     
-    const response = createModule.modules.updateVersionModuleApiCall()
-    console.log(response)
+    const response = await createModule.modules.updateVersionModuleApiCall()
     if (response.data) {
       core.setOutput("response", JSON.stringify(response.data));
     }
