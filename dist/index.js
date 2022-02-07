@@ -6002,9 +6002,12 @@ var __webpack_exports__ = {};
 const core = __nccwpck_require__(6024);
 const createModule = __nccwpck_require__(4466)
 
+ 
 async function run() {
   try {
-    const response = createModule.modules.createModuleApiCall()
+    
+    const response = createModule.modules.updateVersionModuleApiCall()
+    console.log(response)
     if (response.data) {
       core.setOutput("response", JSON.stringify(response.data));
     }
