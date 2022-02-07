@@ -16,7 +16,7 @@ jobs:
           provider: 'aws'
           registry_name: 'private'
           organization: 'wix-infragod'
-          version: 3.0.2
+          version: 3.0.3
           file_path: ${{ github.workspace }}/Archive.zip
       # Use the output from the `hello` step
       - name: Get the output time
