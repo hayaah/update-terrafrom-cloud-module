@@ -44,7 +44,7 @@ const updateVersionModuleApiCall = async () => {
     'Authorization': `Bearer ${getToken()}`
   }
   
-  const response = await axios.post(`https://app.terraform.io/api/v2/organizations/${organization}/registry-modules/${registryName}/wix-infragod/${moduleName}/${provider}/versions`, 
+  const response = await axios.post(`https://app.terraform.io/api/v2/organizations/${organization}/registry-modules/${registryName}/${organization}/${moduleName}/${provider}/versions`, 
     data, {
     headers: headers
   })
