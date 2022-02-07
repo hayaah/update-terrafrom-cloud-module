@@ -14,8 +14,8 @@ jobs:
           provider: 'aws'
           registry_name: 'private'
           organization: 'wix-infragod'
-          version: 3.0.0
-          file_path: '../Archive.zip'
+          version: 3.0.1
+          file_path: 'Archive.zip'
       # Use the output from the `hello` step
       - name: Get the output time
         run: echo "The time was ${{ steps.hello.outputs.response }}"
