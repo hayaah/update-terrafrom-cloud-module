@@ -1,58 +1,52 @@
-##
-# Publish new action tag(s) for downstream consumption
-##
-name: Publish
+# ##
+# # Publish new action tag(s) for downstream consumption
+# ##
+# name: Publish
 
-# Manual or automatic release
-on:
-  release:
-    types: [published, edited]
+# # Manual or automatic release
+# on:
+#   release:
+#     types: [published, edited]
 
-jobs:
-  publish:
-    runs-on: ubuntu-latest
-    steps:
-      # Release with semantic tag like v1.0.3
-      - name: Checkout
-        uses: actions/checkout@v2
-        with:
-          ref: ${{ github.event.release.tag_name }}
+# jobs:
+#   publish:
+#     runs-on: ubuntu-latest
+#     steps:
+#       # Release with semantic tag like v1.0.3
+#       - name: Checkout
+#         uses: actions/checkout@v2
+#         with:
+#           ref: ${{ github.event.release.tag_name }}
           
-      - name: Setup Node
-        uses: actions/setup-node@v2
+#       - name: Setup Node
+#         uses: actions/setup-node@v2
 
-      # # Compile dist/index.js and bundle with action.yml
-      # # Force push major and minor tags, e.g. v1, v1.0
-      # # See documentation: https://github.com/JasonEtco/build-and-tag-action
-      # - uses: JasonEtco/build-and-tag-action@v2
-      #   env:
-      #     GITHUB_TOKEN: ${{ github.token }}
-      - uses: actions/checkout@v2
-        - name: Get full tag
-          id: full_tag
-          run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
-        - name: Get major and minor versions
-          id: versions
-          run: |
-            echo ::set-output name=MAJOR::$(echo $VERSION | cut -d. -f1)
-            echo ::set-output name=MINOR::$(echo $VERSION | cut -d. -f2)
-          env:
-            VERSION: ${{ steps.full_tag.outputs.VERSION }}
-      - uses: actions/create-release@v1
-        id: create_release
-        with:
-          tag_name: ${{ steps.full_tag.outputs.VERSION }}
-          release_name: ${{ steps.full_tag.outputs.VERSION }}
-          draft: false
-          prerelease: false
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - uses: actions/checkout@v2
+#         - name: Get full tag
+#           id: full_tag
+#           run: echo ::set-output name=VERSION::${GITHUB_REF#refs/tags/}
+#         - name: Get major and minor versions
+#           id: versions
+#           run: |
+#             echo ::set-output name=MAJOR::$(echo $VERSION | cut -d. -f1)
+#             echo ::set-output name=MINOR::$(echo $VERSION | cut -d. -f2)
+#           env:
+#             VERSION: ${{ steps.full_tag.outputs.VERSION }}
+#       - uses: actions/create-release@v1
+#         id: create_release
+#         with:
+#           tag_name: ${{ steps.full_tag.outputs.VERSION }}
+#           release_name: ${{ steps.full_tag.outputs.VERSION }}
+#           draft: false
+#           prerelease: false
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
 
-      - uses: actions/upload-release-asset@v1
-        with:
-          upload_url: ${{ steps.create_release.outputs.upload_url }}
-          asset_path: ./dist-${{ steps.full_tag.outputs.VERSION }}.tar.gz
-          asset_name: dist-${{ steps.full_tag.outputs.VERSION }}.tar.gz
-          asset_content_type: application/gzip
-        env:
-          GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
+#       - uses: actions/upload-release-asset@v1
+#         with:
+#           upload_url: ${{ steps.create_release.outputs.upload_url }}
+#           asset_path: ./dist-${{ steps.full_tag.outputs.VERSION }}.tar.gz
+#           asset_name: dist-${{ steps.full_tag.outputs.VERSION }}.tar.gz
+#           asset_content_type: application/gzip
+#         env:
+#           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
