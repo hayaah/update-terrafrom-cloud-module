@@ -5,8 +5,8 @@ jobs:
     runs-on: ubuntu-latest
     name: A job to test function
     steps:
-    - name: Checkout
-      uses: actions/checkout@v2
+      - name: Checkout
+        uses: actions/checkout@v2
       - name: tets create module
         id: hello
         uses: hayaah/update-terrafrom-cloud-module@v1.1.7
