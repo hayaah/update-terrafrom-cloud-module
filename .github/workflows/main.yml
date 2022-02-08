@@ -16,7 +16,7 @@ jobs:
           provider: 'aws'
           registry_name: 'private'
           organization: 'wix-infragod'
-          version: 3.0.100
+          version: 5.0.100
           file_path: module.tar.gz
       # Use the output from the `hello` step
       - name: Get the output time
