@@ -9,7 +9,7 @@ jobs:
         uses: actions/checkout@v2
       - name: tets create module
         id: hello
-        uses: hayaah/update-terrafrom-cloud-module@v1.1.8
+        uses: hayaah/update-terrafrom-cloud-module@v1.1.9
         with:
           module_name: 'test-haya'
           token:  ${{ secrets.TERRAFORM_TOKEN }}
