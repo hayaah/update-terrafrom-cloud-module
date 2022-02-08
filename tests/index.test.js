@@ -1,85 +1,101 @@
-// const axios = require('axios');
-// const createModule = require('../lib/createModule');
+const request = require('request');
+const updateModuleVersion = require('../lib/updateVersion');
 
-// const mockedUrl = "https://app.terraform.io/api/v2/organizations/infragod-test/registry-modules"
-// const mockedSuccessRes = {
-//   "data":
-//   {
-//     "id": "mod-NeV9qPYFVpGLTJvZ",
-//     "type": "registry-modules",
-//     "attributes":
-//     {
-//       "name": "module-Name-100",
-//       "namespace": "wix-infragod",
-//       "provider": "aws",
-//       "status": "pending",
-//       "version-statuses": [],
-//       "created-at": "2022-02-06T04:03:00.646Z",
-//       "updated-at": "2022-02-06T04:03:00.646Z",
-//       "registry-name": "private",
-//       "permissions": { "can-delete": true, "can-resync": true, "can-retry": true }
-//     },
-//     "relationships": {
-//       "organization":
-//         { "data": { "id": "wix-infragod", "type": "organizations" } }
-//     },
-//     "links": {
-//       "self": ""
-//     }
-//   }
-// }
+const mockedUpdateUrl = `https://app.terraform.io/api/v2/organizations/infragod-test/registry-modules/private/infragod-test/module_name/gcp/versions`
+const mockedSuccessRes = {
+  "data": {
+    "id": "modver-2YB8p2aLtnwPHum8",
+    "type": "registry-module-versions",
+    "attributes": {
+      "source": "tfe-api",
+      "status": "pending",
+      "version": "2.0.99",
+      "created-at": "2022-02-08T07:23:37.186Z",
+      "updated-at": "2022-02-08T07:23:37.186Z"
+    },
+    "relationships": {
+      "registry-module": {
+        "data": {
+          "id": "mod-MZQr4XaAZ7i1bPiw",
+          "type": "registry-modules"
+        }
+      }
+    },
+    "links": {
+      "upload": ""
+    }
+  }
+}
 
-// const mockedFailerRes = {
-//   "errors": [
-//     "Not found"
-//   ],
-//   "success": false
-// }
+const mockedFailerRes = {
+  "error": {
+    "errors": [
+      "Not found"
+    ],
+    "success": false
+  }
+}
+const mockedToken = 'token'
 
-// jest.mock("axios");
+jest.mock('request')
 
-// const mockCreateModuleApi = async () => {
-//   await axios.post.mockImplementation((url) => {
-//     if (url == mockedUrl) {
-//       return Promise.resolve(mockedSuccessRes)
-//     }
-//     return Promise.resolve(mockedFailerRes)
-//   });
-// }
+const mockUpdateVersionApi = () => {
+  request.mockImplementation((req, callback) => {
+    if (req.url == mockedUpdateUrl) {
+      return callback({}, { body: JSON.stringify(mockedSuccessRes) })
+    }
+    return callback(mockedFailerRes, null)
 
-// const setGithubInput = (name, value) =>
-//   process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] = value;
+  });
+}
 
-// describe("test getting variables from the action workflow", () => {
+const setGithubInput = (name, value) =>
+  process.env[`INPUT_${name.replace(/ /g, '_').toUpperCase()}`] = value;
 
-//   test('check if module_name was set successfully / should succeed', (done) => {
-//     setGithubInput("module_name", "module_name")
-//     const params = createModule.modules.getParams()
-//     expect(params.moduleName).toStrictEqual("module_name")
-//     done()
-//   })
+describe("test getting variables from github action", () => {
+  test('check if module_name was set successfully / should succeed', (done) => {
+    setGithubInput("module_name", "module_name")
+    const params = updateModuleVersion.modules.getParams()
+    expect(params.moduleName).toStrictEqual("module_name")
+    done()
+  })
 
-//   test('check if provider was not set / should fail', (done) => {
-//     const params = createModule.modules.getParams()
-//     expect(params.provider).not.toBe("aws")
-//     done()
-//   })
-// })
+  test('check if token is missing / should return an error', (done) => {
+    const token = updateModuleVersion.modules.getToken()
+    expect(token).not.toBe(mockedToken)
+    done()
+  })
 
-// describe("test gcalling create module api", () => {
+  test('check if token is set', (done) => {
+    setGithubInput("token", mockedToken)
+    const token = updateModuleVersion.modules.getToken()
+    expect(token).toStrictEqual(mockedToken)
+    done()
+  })
 
-//   test('check if the url is missing organazation / should fail', async (done) => {
-//     await mockCreateModuleApi()
-//     const res = await createModule.modules.createModuleApiCall()
-//     expect(res).toEqual(mockedFailerRes)
-//     done()
-//   })
+  test('check if provider was not set / should return error', (done) => {
+    const params = updateModuleVersion.modules.getParams()
+    expect(params.provider).not.toBe("aws")
+    done()
+  })
+})
 
-//   test('check if the url is set correctly', async (done) => {
-//     setGithubInput("organization", "infragod-test")
-//     await mockCreateModuleApi()
-//     const res = await createModule.modules.createModuleApiCall()
-//     expect(res).toEqual(mockedSuccessRes)
-//     done()
-//   })
-// })
+describe("test calling update module version api", () => {
+
+  test('check if the url is params are not set / should return error', async (done) => {
+    mockUpdateVersionApi()
+    updateModuleVersion.modules.updateVersionModuleApiCall((res) => expect(res).toEqual(mockedFailerRes))
+    done()
+  })
+
+  test('check if the url is set correctly', async (done) => {
+    setGithubInput("organization", "infragod-test")
+    setGithubInput("registry_name", "private")
+    setGithubInput("provider", "gcp")
+    mockUpdateVersionApi()
+    updateModuleVersion.modules.updateVersionModuleApiCall((res) => {
+      expect(res).toEqual(mockedSuccessRes)
+    })
+    done()
+  })
+})
