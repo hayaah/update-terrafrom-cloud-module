@@ -9,6 +9,11 @@ on:
       - main
     paths:
       - actions/**  
+  pull_requests:
+    branches:
+      - main
+    paths:
+      - actions/**  
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
 
