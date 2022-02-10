@@ -1,5 +1,5 @@
 const request = require('request');
-const updateModuleVersion = require('../lib/updateVersion');
+const updateModuleVersion = require('../../lib/updateVersion');
 
 const mockedUpdateUrl = `https://app.terraform.io/api/v2/organizations/infragod-test/registry-modules/private/infragod-test/module_name/gcp/versions`
 const mockedSuccessRes = {
@@ -27,22 +27,16 @@ const mockedSuccessRes = {
   }
 }
 
-const mockedFailerRes = {
-  "error": {
-    "errors": [
-      "Not found"
-    ],
-    "success": false
-  }
-}
+const mockedFailerRes = { error: { errors: ['Not found'], success: false } }
 const mockedToken = 'token'
 
 jest.mock('request')
 
 const mockUpdateVersionApi = () => {
   request.mockImplementation((req, callback) => {
+
     if (req.url == mockedUpdateUrl) {
-      return callback({}, { body: JSON.stringify(mockedSuccessRes) })
+       return callback(null, { body: JSON.stringify(mockedSuccessRes) })
     }
     return callback(mockedFailerRes, null)
 
@@ -84,7 +78,9 @@ describe("test calling update module version api", () => {
 
   test('check if the url is params are not set / should return error', async (done) => {
     mockUpdateVersionApi()
-    updateModuleVersion.modules.updateVersionModuleApiCall((res) => expect(res).toEqual(mockedFailerRes))
+    updateModuleVersion.modules.updateVersionModuleApiCall((res) => {
+      expect(res).toEqual(mockedFailerRes)
+    })
     done()
   })
 
