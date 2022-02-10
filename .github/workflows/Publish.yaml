@@ -14,8 +14,8 @@ jobs:
         uses: actions/checkout@v2
         with:
           ref: ${{ github.event.release.tag_name }}
-      - run: npm ci
-      - run: npx @vercel/ncc build && npx convert-action
+      - run: npm install
+      - run: ncc build lib/index.js
       - uses: JasonEtco/build-and-tag-action@v1
         env:
           GITHUB_TOKEN: ${{ github.token }}
