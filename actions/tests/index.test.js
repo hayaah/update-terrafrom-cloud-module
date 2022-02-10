@@ -74,7 +74,7 @@ describe("test getting variables from github action", () => {
   })
 })
 
-describe("test calling update module version api", () => {
+describe("test calling update module version api!!", () => {
 
   test('check if the url is params are not set / should return error', async (done) => {
     mockUpdateVersionApi()
