@@ -4,11 +4,12 @@
   "description": "JavaScript Action To Create Modules In Terraform Cloud",
   "main": "dist/index.js",
   "scripts": {
-    "npm test":  "npx jest test"
-},
+    "build": "npx @vercel/ncc build && npx convert-action"
+  },
   "dependencies": {
     "@actions/core": "^1.6.0",
     "@actions/github": "^5.0.0",
+    "convert-action": "^0.1.3",
     "request": "^2.88.2"
   },
   "devDependencies": {
