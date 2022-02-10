@@ -9,7 +9,7 @@ on:
       - main
     paths:
       - actions/**  
-  pull_requests:
+  pull_request:
     branches:
       - main
     paths:
