@@ -5,7 +5,7 @@ name: test infragod github actions
 on:
   pull_request:
     branches:
-      - master
+      - main
     paths:
       - actions/**
 
