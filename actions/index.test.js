@@ -1,5 +1,5 @@
 const request = require('request');
-const updateModuleVersion = require('../../lib/updateVersion');
+const updateModuleVersion = require('../lib/updateVersion');
 
 const mockedUpdateUrl = `https://app.terraform.io/api/v2/organizations/infragod-test/registry-modules/private/infragod-test/module_name/gcp/versions`
 const mockedSuccessRes = {
@@ -84,7 +84,7 @@ describe("test calling update module version api!!", () => {
     done()
   })
 
-  test('check if the url is set correctly 00', async (done) => {
+  test('check if the url is set correctly', async (done) => {
     setGithubInput("organization", "infragod-test")
     setGithubInput("registry_name", "private")
     setGithubInput("provider", "gcp")
