@@ -6,11 +6,11 @@ on:
   push:
     branches: [ master ]
     paths:
-      - actions/**
+      - 'actions/**'
   pull_request:
     branches: [ master ]
     paths:
-      - actions/**
+      - 'actions/**'
 
   # Allows you to run this workflow manually from the Actions tab
   workflow_dispatch:
