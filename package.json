@@ -2,7 +2,7 @@
   "name": "update-terraform-module-action",
   "version": "1.0.0",
   "description": "JavaScript Action To Create Modules In Terraform Cloud",
-  "main": "dist/index.js",
+  "main": "lib/index.js",
   "scripts": {
     "build": "npx @vercel/ncc build && npx convert-action"
   },
