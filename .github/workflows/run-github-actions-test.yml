@@ -3,6 +3,11 @@
 name: test infragod github actions 
 
 on:
+  push:
+    branches:
+      - master
+    paths:
+      - actions/**
   pull_request:
     branches:
       - master
