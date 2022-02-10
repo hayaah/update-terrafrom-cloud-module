@@ -84,7 +84,7 @@ describe("test calling update module version api", () => {
     done()
   })
 
-  test('check if the url is set correctly!!!!', async (done) => {
+  test('check if the url is set correctly 99', async (done) => {
     setGithubInput("organization", "infragod-test")
     setGithubInput("registry_name", "private")
     setGithubInput("provider", "gcp")
