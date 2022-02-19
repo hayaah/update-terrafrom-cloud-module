@@ -1,5 +1,5 @@
 const request = require('request');
-const updateModuleVersion = require('../lib/updateVersion');
+const updateModuleVersion = require('./lib/updateVersion');
 
 const mockedUpdateUrl = `https://app.terraform.io/api/v2/organizations/infragod-test/registry-modules/private/infragod-test/module_name/gcp/versions`
 const mockedSuccessRes = {
