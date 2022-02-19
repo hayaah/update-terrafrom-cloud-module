@@ -35,6 +35,7 @@ jobs:
           node-version: "14.x"
        - name: Install dependencies
          run: |
+           echo "${{ github.workspace }}"
            cd ${{ matrix.dir }}
            npm install
            npx jest test
