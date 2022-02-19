@@ -34,8 +34,8 @@ jobs:
          with: 
           node-version: "14.x"
        - name: Install dependencies
+         working-directory: ${{ matrix.dir }}
          run: npm install
        - name: Run tests
-         run: npx jest test
-
- 
+         working-directory: ${{ matrix.dir }}
+         run: npx jest test 
