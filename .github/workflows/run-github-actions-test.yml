@@ -21,31 +21,25 @@ defaults:
   run:
     working-directory: ./test-directory
 
-# A workflow run is made up of one or more jobs that can run sequentially or in parallel
-jobs: 
-    
-  # This workflow contains a single job called "build"
-  build:
-    runs-on: ubuntu-latest
-
-    # Steps represent a sequence of tasks that will be executed as part of the job
-    steps:
-      # Checks-out your repository under $GITHUB_WORKSPACE, so your job can access it
-      - name: Checkout
-        uses: actions/checkout@v2
-      
-      - name: Use Node.js 
-        uses: actions/setup-node@v2
-        with: 
-          node-version: "16.x"
-
-#       - name:  go to directory
-#         run: cd  test-directory 
-      - name: Install dependencies 
-        run: npm install
-
-      - name: Run test 
-
-        run: npx jest test
+jobs:
+   build:
+     runs-on: ubuntu-latest
+     strategy:
+      matrix: { 
+        dir: [
+          './actions',
+          './actions-2'
+        ]}
+     steps:
+       - name: Checkout
+         uses: actions/checkout@v2
+       - name: Use Node.js
+         uses: actions/setup-node@v2
+         with: 
+          node-version: "14.x"
+       - name: Install dependencies
+         run: npm install
+       - name: Run tests
+         run: npx jest test
 
  
