@@ -11,14 +11,13 @@ jobs:
   build:
     name: Upload Release Asset
     runs-on: ubuntu-latest
-    strategy:
-      matrix: {   dir: [ './actions',  './actions-2' ]}
+   
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
       - name: Build project  
         run: |
-           zip -r -j actions.zip ${{ matrix.dir }}
+           zip -r -j actions.zip ./actions ./actions-2
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
