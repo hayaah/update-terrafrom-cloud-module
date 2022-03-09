@@ -36,9 +36,9 @@ jobs:
         uses: actions/checkout@v2
       - run: |
            ls
-           cd /actions
+           cd ./actions
            ls
-           cd /actions/dist
+           cd ./actions/dist
            ls
       - name: Build project  
         run: |
