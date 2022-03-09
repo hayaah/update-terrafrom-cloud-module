@@ -27,6 +27,10 @@ jobs:
           npm run build
           ls
       - run: |
+          cd ./actions-2
+          ls
+      
+      - run: |
           zip -r actions.zip  /actions/dist /actions-2/dist
           ls
       - name: Create Release
