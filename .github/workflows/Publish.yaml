@@ -31,7 +31,7 @@ jobs:
           ls
       
       - run: |
-          zip -r actions.zip  /actions/dist /actions-2/dist
+          zip -r actions.zip  ./actions ./actions-2
           ls
       - name: Create Release
         id: create_release
