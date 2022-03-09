@@ -11,39 +11,24 @@ jobs:
   build:
     name: build dist folders
     runs-on: ubuntu-latest
-    strategy:
-       matrix: { dir: ['actions', 'actions-2'] }
     steps:
       - name: Checkout
         uses: actions/checkout@v2
-      - run: | 
-          cd ./${{ matrix.dir }}
+      - name: build actions
+        run: | 
+          cd ./actions
           npm install
-      - run:  |
-         cd ./${{ matrix.dir }}
-         npm run build
-      - run: |
+          npm run build
           ls
-          cd ./${{ matrix.dir }}/dist
+      - name: build actions-2
+        run: | 
+          cd ./actions-2
+          npm install
+          npm run build
           ls
-  release:
-    name: Upload Release Asset
-    runs-on: ubuntu-latest
-    needs: 
-      - build
-    steps:
-      - name: Checkout code
-        uses: actions/checkout@v2
       - run: |
-           ls
-           cd ./actions
-           ls
-           cd ./actions/dist
-           ls
-      - name: Build project  
-        run: |
-            ls
-            zip -r actions.zip  /actions/dist /actions-2/dist
+          zip -r actions.zip  /actions/dist /actions-2/dist
+          ls
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
@@ -64,3 +49,5 @@ jobs:
           asset_path: ${{ github.workspace }}/actions.zip
           asset_name: actions.zip
           asset_content_type: application/zip
+
+ 
