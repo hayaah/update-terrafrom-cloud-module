@@ -21,14 +21,10 @@ jobs:
           npm install
       - run:  |
          cd ./${{ matrix.dir }}
-         ls
          npm run build
       - run: |
-          cd ./${{ matrix.dir }}
           ls
-          mkdir -p ${{ matrix.dir }} 
-          ls
-          mv dist ${{ matrix.dir }}  
+          cd ./${{ matrix.dir }}/dist
           ls
   release:
     name: Upload Release Asset
@@ -38,10 +34,14 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
+        
+      - run: |
+           cd /actions/dist
+           ls
       - name: Build project  
         run: |
             ls
-            zip -p -r actions.zip . -i /actions/actions /actions-2/actions-2
+            zip -r actions.zip  /actions/dist /actions-2/dist
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
