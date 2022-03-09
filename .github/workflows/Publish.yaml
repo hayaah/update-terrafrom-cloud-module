@@ -40,7 +40,8 @@ jobs:
         uses: actions/checkout@v2
       - name: Build project  
         run: |
-           zip -r actions.zip actions/actions actions-2/actions-2
+           ls
+           zip -p actions.zip -r /actions/actions /actions-2/actions-2
       - name: Create Release
         id: create_release
         uses: actions/create-release@v1
