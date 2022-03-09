@@ -34,8 +34,8 @@ jobs:
     steps:
       - name: Checkout code
         uses: actions/checkout@v2
-        
       - run: |
+           ls
            cd /actions
            ls
            cd /actions/dist
